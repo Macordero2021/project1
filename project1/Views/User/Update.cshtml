@@ -1,0 +1,25 @@
+﻿@model project1.Models.DTO.UserDTO
+@{
+    ViewBag.Title = "Update";
+}
+
+<h2>Update User</h2>
+
+<form method="post" action="@Url.Action("Update", "User")">
+    <input type="hidden" id="Id" name="Id" value="@Model.Id" />
+
+    <div class="form-group">
+        <label for="Name">Name</label>
+        <input type="text" id="Name" name="Name" value="@Model.Name" class="form-control" />
+    </div>
+    <div class="form-group" style="margin-bottom: 10px">
+        <label for="Email">Email</label>
+        <input type="text" id="Email" name="Email" value="@Model.Email" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Update</button>
+
+    <a href="/User/Index" class="btn btn-secondary">Cancel</a>
+
+</form>
+

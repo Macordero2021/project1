@@ -1,0 +1,18 @@
+﻿@model project1.Models.DTO.UserDTO
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete User</h2>
+
+<form method="post" action="/User/DeleteConfirmed/@Model.Id">
+    <p>Are you sure want to delete thid user?</p>
+    <p><strong>@Model.Name</strong></p>
+    <p><strong>@Model.Email</strong></p>
+
+    <button type="submit" class="btn btn-danger">Delete</button>
+
+    <a href="/User/Index" class="btn btn-secondary">Cancel</a>
+
+</form>
+

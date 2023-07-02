@@ -26,8 +26,8 @@
                     <td>@user.Name</td>
                     <td>@user.Email</td>
                     <td>
-                        <a href="@Url.Action("Edit","User", new {id=user.Id})">Edit</a>
-                        <a href="@Url.Action("Delete","User", new {id=user.Id})">Delete</a>
+                        <a class="btn btn-success" href="@Url.Action("Update","User", new {id=user.Id})">Edit</a>
+                        <a class="btn btn-danger"  href="@Url.Action("Delete","User", new {id=user.Id})">Delete</a>
                     </td>
                 </tr>
             }

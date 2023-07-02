@@ -4,12 +4,16 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlTypes;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Web;
+using System.Web.UI.WebControls;
 
 namespace project1.Models.DAO
 {
     public class UserDAO
     {
+        public UserDTO updateUser { get; private set; }
+
         /// <summary>
         /// Insert an user into user table
         /// </summary>
@@ -90,6 +94,34 @@ namespace project1.Models.DAO
             return users;
         }
 
+        public UserDTO GetUserById(int id)
+        {
+            using(MySqlConnection connection = Config.GetConnection())
+            {
+                connection.Open();
+
+                string selectQuery = "SELECT * FROM Users WHERE id=@pId";
+
+                using(MySqlCommand command = new MySqlCommand(selectQuery, connection))
+                {
+                    command.Parameters.AddWithValue("@pId", id);
+
+                    using(MySqlDataReader reader = command.ExecuteReader())
+                    {
+                        if(reader.Read())
+                        {
+                            UserDTO user = new UserDTO();
+                            user.Id = reader.GetInt32("id");
+                            user.Name = reader.GetString("name");
+                            user.Email = reader.GetString("email");
+                            return user;
+                        }
+                    }
+                }
+            }
+            return null;
+        }
+
 
         /// <summary>
         /// Quiz #1
@@ -99,7 +131,37 @@ namespace project1.Models.DAO
         /// <returns></returns>
         public string UpdateUser(UserDTO user, int id)
         {
-            return null;
+            string response = "Failed";
+
+            try
+            {
+                using (MySqlConnection connection = Config.GetConnection())
+                {
+                    connection.Open();
+
+                    string updateQuery = "UPDATE Users SET name = @pName, email = @pEmail WHERE id=@pId";
+
+                    using(MySqlCommand command = new MySqlCommand(updateQuery, connection))
+                    {
+                        command.Parameters.AddWithValue("@pName", user.Name);
+                        command.Parameters.AddWithValue("@pEmail", user.Email);
+                        command.Parameters.AddWithValue("@pId", id);
+
+                        int rowsAffected = command.ExecuteNonQuery();
+
+                        if(rowsAffected > 0)
+                        {
+                            response = "Success";
+                        }
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("Error" + ex.Message);
+            }
+            
+            return response;
         }
 
         /// <summary>
@@ -110,7 +172,34 @@ namespace project1.Models.DAO
 
         public string DeleteUser(int id)
         {
-            return null;
+            string response = "Failed";
+
+            try
+            {
+                using (MySqlConnection connection = Config.GetConnection())
+                {
+                    connection.Open();
+
+                    string deleteQuery = "DELETE FROM Users WHERE id = @pId";
+
+                    using(MySqlCommand command = new MySqlCommand(deleteQuery, connection))
+                    {
+                        command.Parameters.AddWithValue("@pId", id);
+
+                        int rowsAffected = command.ExecuteNonQuery();
+
+                        if(rowsAffected > 0)
+                        {
+                            response = "Success";
+                        }
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("Error" + ex.Message);
+            }
+            return response;
         }
     }
 }
