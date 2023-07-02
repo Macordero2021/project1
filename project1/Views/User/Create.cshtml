@@ -1,0 +1,48 @@
+﻿
+@model project1.Models.DTO.UserDTO
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create new user</h2>
+<div>
+    <h2>Usual Way</h2>
+    <form action="/User/Create" method="post" class="form">
+        <div class="form-group">
+            <label for="Name">Name:</label>
+            <input type="text" name="Name" id="Name" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label for="Email">Email:</label>
+            <input type="text" name="Email" id="Email" class="form-control" />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save</button>
+
+    </form>
+</div>
+
+<br />
+<br />
+
+
+<div>
+    <h2>Razor Way</h2>
+    @using (Html.BeginForm("Create", "User", FormMethod.Post, new { @class = "form" }))
+    {
+        <div class="form-group">
+            <label for="Name">Name:</label>
+            @Html.TextBoxFor(model => model.Name, new {@class = "form-control"})
+            
+        </div>
+
+        <div class="form-group">
+            <label for="Email">Email:</label>
+            @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save</button>
+    }
+</div>

@@ -1,7 +1,37 @@
-﻿
+﻿@model List<project1.Models.DTO.UserDTO>
+
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>User List</h2>
+
+<a class="btn btn-danger" style="margin:0px 0px 15px 0px" href="@Url.Action("Create","User")">Create</a>
+
+<table class="table table-active">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var user in Model)
+            {
+                <tr>
+                    <td>@user.Id</td>
+                    <td>@user.Name</td>
+                    <td>@user.Email</td>
+                    <td>
+                        <a href="@Url.Action("Edit","User", new {id=user.Id})">Edit</a>
+                        <a href="@Url.Action("Delete","User", new {id=user.Id})">Delete</a>
+                    </td>
+                </tr>
+            }
+    </tbody>
+
+</table>
 
