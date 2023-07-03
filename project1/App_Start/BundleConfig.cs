@@ -23,7 +23,7 @@ namespace project1
                       "~/Scripts/bootstrap.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
+                      "~/Content/bootstrap-Lumen.css",
                       "~/Content/site.css"));
         }
     }
