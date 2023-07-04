@@ -8,7 +8,7 @@
 
 @if (Session["role"].ToString() == "ADMIN")
 {
-    <a class="btn btn-lg btn-primary" style="margin:0px 0px 15px 0px" href="@Url.Action("Create","User")">Create</a>
+    <a class="btn btn-lg btn-primary" style="margin:0px 0px 15px 0px" href="@Url.Action("Create","User")">Create</a> //la funcion create del controlador user
 
     <table class="table table-hover">
         <thead>

@@ -3,6 +3,7 @@ using project1.Models.DAO;
 using project1.Models.DTO;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Timers;
 using System.Web;
@@ -35,16 +36,29 @@ namespace project1.Controllers
 
         public ActionResult Create()
         {
-            return View();
+            var Roles = _db.Roles.ToList(); // Crea variable para traer todos los roles
+            return View(Roles); // Retorna los roles
         }
 
+
         [HttpPost]
-        public ActionResult Create(UserDTO user)
+        public ActionResult Create(UserDTO user, Roles roles) // trae el formulario de la viste del create
 
 
         {
+            string selectedRole = roles.Description; // Trae el nombre del rol que seleccionamos
+            var IdRol = _db.Roles.Where(x => x.Description == selectedRole).First(); // obtener el Id del rol que seleccionamos
+            List<UserDTO> users = userRepository.ReadUsers(); // Obtener lista de todos los usuarios
+            var UserList = users.LastOrDefault(); // obtiene el ultimo usuario de la lista de la DB
+            var UserId = UserList.Id + 1; // obtiene el Id del usuario de la lista y le suma 1 que va hacer el nuevo usuario
+            RolesUsuario IdsSave = new RolesUsuario(); // crea un objeto de la tabla
+            IdsSave.IdRole = IdRol.Id; // guarda el dato en la tabla el id del rol
+            IdsSave.IdUser = UserId; // guardar el dato en la tabla del Id usuario
+            _db.RolesUsuario.Add(IdsSave); // guardar los datos en la BD
+            _db.SaveChanges(); // Guarda los datos
             userRepository.InsertUser(user);
             return RedirectToAction("Index");
+
         }
 
         public ActionResult Update(int id)
