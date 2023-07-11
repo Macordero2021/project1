@@ -19,9 +19,9 @@
             <input type="text" name="Email" id="Email" class="form-control" />
         </div>
 
-        <div>
-            <select name="description" id="roles" class="form-control" required>
-                <option>Seleccione el Rol</option>
+        <div> 
+            <select style="margin-top:10px" name="description" id="roles" class="form-select" required>
+                <option>Seleccione un Rol</option>
                 @foreach (var role in Model)
                 {
                     <option>@role.Description</option>
