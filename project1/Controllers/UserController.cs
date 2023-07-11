@@ -46,12 +46,12 @@ namespace project1.Controllers
 
 
         {
-            userRepository.InsertUser(user);
+            userRepository.InsertUser(user); // inserta el nuevo usuario
             string selectedRole = roles.Description; // Trae el nombre del rol que seleccionamos
             var IdRol = _db.Roles.Where(x => x.Description == selectedRole).First(); // obtener el Id del rol que seleccionamos
             List<UserDTO> users = userRepository.ReadUsers(); // Obtener lista de todos los usuarios
             var UserList = users.LastOrDefault(); // obtiene el ultimo usuario de la lista de la DB
-            var UserId = UserList.Id; // obtiene el Id del usuario de la lista y le suma 1 que va hacer el nuevo usuario
+            var UserId = UserList.Id; // obtiene el Id del usuario de la lista
             RolesUsuario IdsSave = new RolesUsuario(); // crea un objeto de la tabla
             IdsSave.IdRole = IdRol.Id; // guarda el dato en la tabla el id del rol
             IdsSave.IdUser = UserId; // guardar el dato en la tabla del Id usuario
