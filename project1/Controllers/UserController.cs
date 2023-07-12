@@ -99,6 +99,20 @@ namespace project1.Controllers
             String result = userRepository.DeleteUser(id);
             return RedirectToAction("Index");
         }
+
+        [HttpGet]
+        public ActionResult getRole(int id)
+        {
+            try
+            {
+                int idRole = _db.RolesUsuario.Where(x => x.IdUser == id).FirstOrDefault().IdRole;
+                return Content(_db.Roles.Where(x => x.Id == idRole).FirstOrDefault().Description);
+            }
+            catch (Exception ex)
+            {
+                return Content("DESCONOCIDO");
+            }
+        }
     }
 
 }

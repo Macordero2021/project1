@@ -14,6 +14,7 @@
         <thead>
             <tr>
                 <th>Id</th>
+                <th>Role</th>
                 <th>Name</th>
                 <th>Email</th>
                 <th>Actions</th>
@@ -24,7 +25,8 @@
             @foreach (var user in Model)
             {
                 <tr>
-                    <td>@user.Id</td>
+                    <td><a href ="#" onclick="getRole(@user.Id)">@user.Id</a></td>
+                    <td id="role_@user.Id"></td>
                     <td>@user.Name</td>
                     <td>@user.Email</td>
                     <td>
@@ -40,5 +42,23 @@
 else
 {
     <h2>You don't have Access!!</h2>
+}
+
+@section scripts
+{
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script>
+      
+            function getRole(idUser) {
+                $.ajax({
+                    url: "@Url.Action("getRole")",
+                    data: { id: idUser },
+                    type: "GET",
+                    success: function (response) {
+                        $("#role_" + idUser).text(response);
+                    }
+                })
+            }
+    </script>
 }
 
