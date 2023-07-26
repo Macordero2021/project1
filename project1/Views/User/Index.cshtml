@@ -25,7 +25,11 @@
             @foreach (var user in Model)
             {
                 <tr>
-                    <td><a href ="#" onclick="getRole(@user.Id)">@user.Id</a></td>
+                    @*@<td><a href ="#" onclick="getRole(@user.Id)">@user.Id</a></td>*@
+                    <th>
+                        @Ajax.ActionLink(@user.Id.ToString(), "getRole", new { id = user.Id.ToString() }, 
+                        new AjaxOptions { UpdateTargetId = "role_" + user.Id, InsertionMode =  InsertionMode.Replace, HttpMethod = "GET" })
+                    </th>
                     <td id="role_@user.Id"></td>
                     <td>@user.Name</td>
                     <td>@user.Email</td>
@@ -56,6 +60,9 @@ else
                     type: "GET",
                     success: function (response) {
                         $("#role_" + idUser).text(response);
+                    },
+                    error: function (xhr, textStatus, errorthrow) {
+                        $("#role_" + idUser.text(""));
                     }
                 })
             }

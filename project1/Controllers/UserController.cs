@@ -22,6 +22,28 @@ namespace project1.Controllers
         public ActionResult Index()
         {
             
+            var invoices = _db.Invoices.ToList();
+
+            List<Invoice> invoiceCustomerA = invoices.Where(invoice => invoice.Customer == "Cliente A").ToList();
+            List<Invoice> invoiceCustomerALINQ = (from invoice in invoices where invoice.Customer == "Cliente A" select invoice).ToList(); 
+
+            var totalinvoiceRecords = invoices.Count();
+
+            var upInvoice = invoices.Max(i => i.Total);
+            var upInvoice2 = invoices.OrderByDescending(i => i.Total).FirstOrDefault();
+            Invoice upInvoiceLINQ = (from invoice in invoices orderby invoice.Total descending select invoice).FirstOrDefault();
+
+            var greaterThan500 = invoices.Any(i => i.Total > 500);
+
+            var totalsum = invoices.Sum(i => i.Total);
+
+            var greatherThan100AndDifferentCustomer = invoices.Where(i => i.Total > 100 && i.Customer != "Cliente C");
+
+            var allGreaterThan50 = invoices.All(i => i.Total > 50);
+
+            List<Invoice> first5Records = (from i in invoices orderby i.Date select i).Take(5).ToList();
+
+
             List<UserDTO> users = userRepository.ReadUsers();
             //get an specific user(5)
             UserDTO user = (from u in users where 5 == u.Id select u).First();
@@ -108,9 +130,8 @@ namespace project1.Controllers
                 int idRole = _db.RolesUsuario.Where(x => x.IdUser == id).FirstOrDefault().IdRole;
                 return Content(_db.Roles.Where(x => x.Id == idRole).FirstOrDefault().Description);
             }
-            catch (Exception ex)
-            {
-                return Content("DESCONOCIDO");
+                catch (Exception ex) { 
+                    return Content("DESCONOCIDO");
             }
         }
     }
