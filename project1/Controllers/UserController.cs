@@ -43,6 +43,23 @@ namespace project1.Controllers
 
             List<Invoice> first5Records = (from i in invoices orderby i.Date select i).Take(5).ToList();
 
+            var totalInvoice = invoices.Sum(i => i.Total); //¿Cuál es el total de todas las facturas registradas en la base de datos?//
+
+            var InvoicesClientB = invoices.Count(i => i.Customer == "Cliente B"); //¿Cuántas facturas tiene el cliente "Cliente B"?//
+
+            var InvoiceBajo = invoices.Min(i => i.Total); // ¿Cuál es la factura con el monto más bajo?//
+
+            List<String> InvoiceThan200Clients = invoices.Where(i => i.Total > 200).Select(i => i.Customer).ToList(); //Obtener una lista con los nombres de los clientes que tienen facturas con monto mayor a $200.//
+
+            var DateAntigue = invoices.Min(i => i.Date); //¿Cuál es la fecha más antigua registrada en las facturas?//
+
+            List<Invoice> InvoicesRecentFive = invoices.OrderByDescending(i => i.Date).Take(5).ToList(); //Obtener una lista de las 5 facturas más recientes.//
+
+            DateTime today = DateTime.Today;
+            List<Invoice> InvoicesToday = invoices.Where(i => i.Date.Date == today).ToList(); //¿Hay alguna factura registrada el día de hoy?
+
+
+
 
             List<UserDTO> users = userRepository.ReadUsers();
             //get an specific user(5)
