@@ -58,8 +58,9 @@ namespace project1.Controllers
             DateTime today = DateTime.Today;
             List<Invoice> InvoicesToday = invoices.Where(i => i.Date.Date == today).ToList(); //¿Hay alguna factura registrada el día de hoy?
 
+            List<Invoice> invoicesmore100 = invoices.Where(i => i.Total <= 100 && i.Customer != "Cliente A").ToList(); //Obtener una lista de las facturas que tienen un monto menor o igual a $100 y un cliente distinto de "Cliente A".
 
-
+            var total = invoices.Average(i => i.Total); //¿Cuál es el promedio del monto de las facturas?
 
             List<UserDTO> users = userRepository.ReadUsers();
             //get an specific user(5)
